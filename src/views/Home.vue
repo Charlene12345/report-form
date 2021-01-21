@@ -1,20 +1,33 @@
 <template>
   <div class="home">
-    report
+    <top-view/>
+    <sales-view/>
+    <bottom-view/>
+    <map-view/>
   </div>
 </template>
 
 <script>
+import TopView from '../components/TopView'
+import SalesView from '../components/SalesView'
+import BottomView from '../components/BottomView'
+import MapView from '../components/MapView'
 
 export default {
-  name: 'Home'
+  name: 'Home',
+  components: {
+    TopView,
+    SalesView,
+    BottomView,
+    MapView
+  }
 }
 </script>
 <style>
   .home{
     width: 100%;
     height: 100%;
-    padding: 0 20px;
+    padding: 20px 20px;
     background: #eee;
     box-sizing: border-box;
   }
