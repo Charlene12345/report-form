@@ -1,8 +1,8 @@
 <template>
-  <common-card title="累计订单量" value="$ 2,157,456">
+  <common-card title="累计订单量" value="   2,157,456">
     <!--匿名插槽-->
     <template>
-      <div class="total-order-chart" ref="chart"></div>
+      <v-chart :options="getOptions()"/>
     </template>
     <!--具名插槽-->
     <template v-slot:footer>
@@ -17,39 +17,39 @@ import commonCardMixins from '../../mixins/commonCardMixins'
 export default {
   name: 'index',
   mixins: [commonCardMixins],
-  mounted () {
-    const chartDom = this.$refs.chart
-    const chart = this.$echarts.init(chartDom)
-    chart.setOption({
-      xAxis: {
-        type: 'category',
-        show: false,
-        boundaryGap: false
-      },
-      yAxis: {
-        show: false
-      },
-      series: [{
-        type: 'line',
-        data: [763, 343, 434, 650, 533, 652, 656],
-        areaStyle: {
-          color: 'pink'
+  methods: {
+    getOptions () {
+      return {
+        xAxis: {
+          type: 'category',
+          show: false,
+          boundaryGap: false
         },
-        lineStyle: {
-          width: 0
+        yAxis: {
+          show: false
         },
-        itemStyle: {
-          opacity: 0
-        },
-        smooth: true
-      }],
-      grid: {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0
+        series: [{
+          type: 'line',
+          data: [763, 343, 434, 650, 533, 652, 656],
+          areaStyle: {
+            color: 'pink'
+          },
+          lineStyle: {
+            width: 0
+          },
+          itemStyle: {
+            opacity: 0
+          },
+          smooth: true
+        }],
+        grid: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        }
       }
-    })
+    }
   }
 }
 </script>

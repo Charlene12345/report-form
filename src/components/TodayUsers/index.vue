@@ -1,8 +1,7 @@
 <template>
   <common-card title="今日交易用户数" value="81,014">
     <template>
-      <div class="today-users-chart" ref="chart">
-      </div>
+      <v-chart :options="getOptions()"/>
     </template>
     <!--具名插槽-->
     <template v-slot:footer>
@@ -17,32 +16,32 @@ import commonCardMixins from '../../mixins/commonCardMixins'
 export default {
   name: 'index',
   mixins: [commonCardMixins],
-  mounted () {
-    const chartDom = this.$refs.chart
-    const chart = this.$echarts.init(chartDom)
-    chart.setOption({
-      xAxis: {
-        type: 'category',
-        data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00'],
-        show: false
-      },
-      yAxis: {
-        min: 70,
-        show: false
-      },
-      series: [{
-        type: 'bar',
-        data: [103, 143, 134, 150, 133, 152, 156, 88],
-        barWidth: '40%'
-      }],
-      color: ['#3398DB'],
-      grid: {
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0
+  methods: {
+    getOptions () {
+      return {
+        xAxis: {
+          type: 'category',
+          data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00'],
+          show: false
+        },
+        yAxis: {
+          min: 70,
+          show: false
+        },
+        series: [{
+          type: 'bar',
+          data: [103, 143, 134, 150, 133, 152, 156, 88],
+          barWidth: '40%'
+        }],
+        color: ['#3398DB'],
+        grid: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0
+        }
       }
-    })
+    }
   }
 }
 </script>
