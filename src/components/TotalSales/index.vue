@@ -34,6 +34,7 @@ export default {
 <style lang="scss" scoped>
   .compare-wrapper{
     height: 100%;
+    /*垂直居中*/
     display: flex;
     flex-direction: column;
     justify-content: center;

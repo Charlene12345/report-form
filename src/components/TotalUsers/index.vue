@@ -1,5 +1,6 @@
 <template>
   <common-card title="累计用户数" value="1,098,192">
+    <!--匿名插槽-->
     <template>
       <v-chart :options="getOptions()"/>
     </template>
@@ -55,6 +56,7 @@ export default {
             color: '#eeeeee'
           }
         }, {
+          // 红星三角形
           type: 'custom',
           data: [200],
           stack: '总量',
@@ -81,7 +83,7 @@ export default {
                   fill: '#45c946'
                 }
               }, {
-                type: 'path',
+                type: 'path', // 线段
                 shape: {
                   d: 'M512 640l170.666667-213.333333H341.333333z',
                   x: -5,

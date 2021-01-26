@@ -1,5 +1,5 @@
 <template>
-  <common-card title="累计订单量" value="   2,157,456">
+  <common-card title="累计订单量" value="2,157,456">
     <!--匿名插槽-->
     <template>
       <v-chart :options="getOptions()"/>
