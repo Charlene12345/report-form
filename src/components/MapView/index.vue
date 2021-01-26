@@ -1,12 +1,14 @@
 <template>
-  <div class="map-view">
-    <div class="map">map</div>
-  </div>
+  <b-map></b-map>
 </template>
 
 <script>
+import BMap from '../../views/BMap'
 export default {
-  name: 'index'
+  name: 'index',
+  components: {
+    BMap
+  }
 }
 </script>
 
