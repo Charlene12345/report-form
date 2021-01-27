@@ -1,10 +1,14 @@
 <template>
-  <v-chart :options="options"></v-chart>
+<!--    <ve-map :data="chartData" height="800px"></ve-map>-->
+  <ve-bmap
+    :settings="chartSettings"
+    :series="chartSeries"
+    height="100%"
+  >
+  </ve-bmap>
 </template>
 
 <script>
-import 'echarts/extension/bmap/bmap'
-
 /* eslint-disable */
 var data = [
   {name: '海门', value: 9},
@@ -404,131 +408,19 @@ var convertData = function (data) {
   }
   return res;
 }
-// console.log(convertData(data))
-
 export default {
-  name: 'BMap',
+  name: 'BMap2',
   data () {
-    return {
-      options: {}
-    }
-  },
-  mounted () {
-    this.options = {
-      title: {
-        text: '销售数据大盘',
-        subtext: '销售数据统计',
-        sublink: 'http://api.map.baidu.com/lbsapi/getpoint/index.html',
-        left: 'center'
-      },
+    this.chartSettings = {
+      key: '5CNGrxUNjy8WEL8VNnecvPiAunQo5OEz',
       bmap: {
-        key: '5CNGrxUNjy8WEL8VNnecvPiAunQo5OEz',
         center: [118.775859, 31.985021],
-        zoom: 5,
-        roam: true,
-        // mapStyle: {
-        //   styleJson: [{
-        //     'featureType': 'water',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'color': '#d1d1d1'
-        //     }
-        //   }, {
-        //     'featureType': 'land',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'color': '#f3f3f3'
-        //     }
-        //   }, {
-        //     'featureType': 'railway',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'visibility': 'off'
-        //     }
-        //   }, {
-        //     'featureType': 'highway',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'color': '#fdfdfd'
-        //     }
-        //   }, {
-        //     'featureType': 'highway',
-        //     'elementType': 'labels',
-        //     'stylers': {
-        //       'visibility': 'off'
-        //     }
-        //   }, {
-        //     'featureType': 'arterial',
-        //     'elementType': 'geometry',
-        //     'stylers': {
-        //       'color': '#fefefe'
-        //     }
-        //   }, {
-        //     'featureType': 'arterial',
-        //     'elementType': 'geometry.fill',
-        //     'stylers': {
-        //       'color': '#fefefe'
-        //     }
-        //   }, {
-        //     'featureType': 'poi',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'visibility': 'off'
-        //     }
-        //   }, {
-        //     'featureType': 'green',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'visibility': 'off'
-        //     }
-        //   }, {
-        //     'featureType': 'subway',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'visibility': 'off'
-        //     }
-        //   }, {
-        //     'featureType': 'manmade',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'color': '#d1d1d1'
-        //     }
-        //   }, {
-        //     'featureType': 'local',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'color': '#d1d1d1'
-        //     }
-        //   }, {
-        //     'featureType': 'arterial',
-        //     'elementType': 'labels',
-        //     'stylers': {
-        //       'visibility': 'off'
-        //     }
-        //   }, {
-        //     'featureType': 'boundary',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'color': '#fefefe'
-        //     }
-        //   }, {
-        //     'featureType': 'building',
-        //     'elementType': 'all',
-        //     'stylers': {
-        //       'color': '#d1d1d1'
-        //     }
-        //   }, {
-        //     'featureType': 'label',
-        //     'elementType': 'labels.text.fill',
-        //     'stylers': {
-        //       'color': '#999999'
-        //     }
-        //   }]
-        // }
-      },
-      // 提示框组件
-      tooltip: {},
-      series: [
+        zoom: 6,
+        roam: true
+      }
+    }
+    return {
+      chartSeries: [
         {
           name: '销售额',
           type: 'scatter',
@@ -574,7 +466,18 @@ export default {
           //   animation: true
           // }
         }
-      ]
+      ],
+      title: {
+        text: '销售数据大盘',
+        subtext: '销售数据统计',
+        sublink: 'http://api.map.baidu.com/lbsapi/getpoint/index.html',
+        left: 'center'
+      }
+    }
+  },
+  methods: {
+    name () {
+
     }
   }
 }
