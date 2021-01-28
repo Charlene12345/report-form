@@ -1,5 +1,5 @@
 <template>
-  <common-card title="累计用户数" value="1,098,192">
+  <common-card title="累计用户数" :value="userToday > 0 ? userToday : 567">
     <!--匿名插槽-->
     <template>
       <v-chart :options="getOptions()"/>
@@ -8,10 +8,10 @@
     <template v-slot:footer>
       <div class="total-users-footer">
         <span>日同比</span>
-        <span class="emphasize">8.14%</span>
+        <span class="emphasize">{{userGrowthLastDay > 0 ? userGrowthLastDay : '6.8%'}}</span>
         <div class="increase"></div>
         <span class="month">月同比</span>
-        <span class="emphasize">48.14%</span>
+        <span class="emphasize">{{userGrowthLastMonth > 0 ? userGrowthLastMonth : '7.6%'}}</span>
         <div class="decrease"></div>
       </div>
     </template>
@@ -20,9 +20,10 @@
 
 <script>
 import commonCardMixins from '../../mixins/commonCardMixins'
+import commonDataMixin from '@/mixins/commonDataMixin'
 export default {
   name: 'index',
-  mixins: [commonCardMixins],
+  mixins: [commonCardMixins, commonDataMixin],
   methods: {
     getOptions () {
       return {
@@ -41,16 +42,18 @@ export default {
           top: 0
         },
         series: [{
+          name: '上月平台用户数',
           type: 'bar',
-          data: [200],
+          data: [this.userLastMonth > 0 ? this.userLastMonth : 200],
           barWidth: '13%',
           stack: '总量',
           itemStyle: {
             color: '#45c946'
           }
         }, {
+          name: '今日平台用户数',
           type: 'bar',
-          data: [260],
+          data: [this.userTodayNumber > 0 ? this.userTodayNumber : 250],
           stack: '总量',
           itemStyle: {
             color: '#eeeeee'
@@ -58,7 +61,7 @@ export default {
         }, {
           // 红星三角形
           type: 'custom',
-          data: [200],
+          data: [this.userLastMonth > 0 ? this.userLastMonth : 200],
           stack: '总量',
           // api.value(...)，意思是取出 dataItem 中的数值。例如 api.value(0) 表示取出当前 dataItem 中第一个维度的数值。
           // api.coord(...)，意思是进行坐标转换计算。

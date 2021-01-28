@@ -17,7 +17,7 @@ export default {
   name: 'index',
   props: {
     title: String,
-    value: String
+    value: [String, Number]
   }
 }
 </script>
