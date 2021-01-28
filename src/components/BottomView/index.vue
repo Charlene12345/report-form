@@ -29,8 +29,8 @@
               <el-pagination
                 background
                 layout="prev, pager, next"
-                :total="100"
-                :page-size="4"
+                :total="total > 0 ? total : 61"
+                :page-size="pageSize"
                 @current-change="handleCurrentChange"
               ></el-pagination>
             </div>
@@ -63,8 +63,10 @@
 </template>
 
 <script>
+import commonDataMixin from '@/mixins/commonDataMixin'
 export default {
   name: 'index',
+  mixins: [commonDataMixin],
   data () {
     return {
       searchUserOption: {
@@ -100,18 +102,25 @@ export default {
       },
       // searchNumberOption: {},
       tableData: [
-        { id: 1, rank: 1, keyword: '北京', count: 100, users: 100, range: '90%' },
+        { id: 1, rank: 1, keyword: '北京', count: 100, users: 10, range: '90%' },
         { id: 2, rank: 2, keyword: '北京', count: 100, users: 100, range: '90%' },
         { id: 3, rank: 3, keyword: '北京', count: 100, users: 100, range: '90%' },
         { id: 4, rank: 4, keyword: '北京', count: 100, users: 100, range: '90%' }
+        // { id: 4, rank: 4, keyword: '上海', count: 100, users: 100, range: '90%' },
+        // { id: 4, rank: 4, keyword: '南京', count: 100, users: 100, range: '90%' },
+        // { id: 4, rank: 4, keyword: '东莞', count: 100, users: 100, range: '90%' }
       ],
       radioSelect: '品类',
+      totalData: [], // 数据
+      total: 0, // 数据条数
+      pageSize: 4,
       categoryOption: {}
     }
   },
   methods: {
     handleCurrentChange (page) {
       console.log(`当前页: ${page}`)
+      // this.renderPage(page)
     },
     renderPieChart () {
       const mockData = [
@@ -212,10 +221,48 @@ export default {
           }
         }
       }
+    },
+    renderPage (page) {
+      if (this.totalData.length > 0) {
+        this.tableData = this.totalData.slice(
+          (page - 1) * this.pageSize, (page - 1) * this.pageSize + this.pageSize)
+      } else {
+        this.tableData = this.tableData.slice(
+          (page - 1) * this.pageSize, (page - 1) * this.pageSize + this.pageSize)
+      }
     }
   },
   mounted () {
     this.renderPieChart()
+  },
+  watch: {
+    // 遍历wordCloud，适配出一组totalData,也就是模拟数据tableData
+    wordCloud (newValue) {
+      const totalData = []
+      newValue.forEach((item, index) => {
+        totalData.push({
+          id: index + 1,
+          rank: index + 1,
+          keyword: item.word,
+          count: item.count,
+          users: item.user,
+          // 每个用户的整体搜索占比: 用户数/搜索量   保留两位小数
+          range: `${((item.user / item.count) * 100).toFixed(2)}%`
+        })
+      })
+      this.totalData = totalData
+      this.total = this.totalData.length
+      this.renderPage(1)
+      // console.log('wordCloud -> this.totalData', this.totalData)
+
+      this.userCount = totalData.reduce((s, i) => i.users + s, 0)
+      this.searchCount = totalData.reduce((s, i) => i.count + s, 0)
+      this.renderLineChart()
+    },
+
+    category1 (newValue) {
+      this.renderPieChart()
+    }
   }
 }
 </script>

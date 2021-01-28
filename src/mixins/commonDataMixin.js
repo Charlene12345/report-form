@@ -38,6 +38,7 @@ function wrapperArray (o, k) {
 
 export default {
   computed: {
+    // 获取数据 reportData
     reportData () {
       return this.getReportData()
     },
@@ -104,6 +105,11 @@ export default {
 
     userGrowthLastMonth () {
       return wrapperNumber(this.reportData, 'userGrowthLastMonth')
+    },
+
+    // 获取数据 wordCloud 搜索量
+    wordCloud () {
+      return this.getWordCloud()
     }
   },
   inject: ['getReportData', 'getWordCloud', 'getMapData']
