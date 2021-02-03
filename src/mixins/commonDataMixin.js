@@ -24,17 +24,22 @@ function wrapperArray (o, k) {
   return o && o[k] ? o[k] : []
 }
 
-// function wrapperObject(o, k) {
-//   if (o && k.includes('.')) {
-//     const keys = k.split('.')
-//     keys.forEach(key => {
-//       o = o[key]
-//     })
-//     return o
-//   } else {
-//     return o && o[k] ? o[k] : {}
-//   }
-// }
+// 品类分布获取数据用的
+function wrapperObject (o, k) {
+  // k当中存在点  category.data1中存在点
+  // 'category.data1'.split(".")
+  // keys = ["category", "data1"]
+  // this.reportData[category][data1]
+  if (o && k.includes('.')) {
+    const keys = k.split('.')
+    keys.forEach(key => {
+      o = o[key]
+    })
+    return o
+  } else {
+    return o && o[k] ? o[k] : {}
+  }
+}
 
 export default {
   computed: {
@@ -110,6 +115,20 @@ export default {
     // 获取数据 wordCloud 搜索量
     wordCloud () {
       return this.getWordCloud()
+    },
+
+    // 品类分布
+    category1 () {
+      return wrapperObject(this.reportData, 'category.data1')
+    },
+
+    category2 () {
+      return wrapperObject(this.reportData, 'category.data2')
+    }
+  },
+  filters: {
+    format (v) {
+      return format(v)
     }
   },
   inject: ['getReportData', 'getWordCloud', 'getMapData']
